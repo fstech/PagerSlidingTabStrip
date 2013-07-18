@@ -34,10 +34,12 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -195,7 +197,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		for (int i = 0; i < tabCount; i++) {
 
 			if (pager.getAdapter() instanceof IconTabProvider) {
-				addIconTab(i, ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
+				addTextTab(i, pager.getAdapter().getPageTitle(i).toString(), ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
 			} else {
 				addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
 			}
@@ -244,6 +246,23 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		tabsContainer.addView(tab);
 
 	}
+
+  private void addTextTab(final int position, String title, int resId) {
+
+    View tab = LayoutInflater.from(getContext()).inflate(R.layout.tab, tabsContainer, false);
+    ((ImageView) tab.findViewById(android.R.id.icon)).setImageResource(resId);
+    ((TextView) tab.findViewById(android.R.id.title)).setText(title);
+
+    tab.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        pager.setCurrentItem(position);
+      }
+    });
+
+    tabsContainer.addView(tab);
+
+  }
 
 	private void addIconTab(final int position, int resId) {
 
