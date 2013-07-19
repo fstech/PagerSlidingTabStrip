@@ -81,6 +81,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	private boolean shouldExpand = false;
 	private boolean textAllCaps = true;
+	private boolean textOnly = false;
 
 	private int scrollOffset = 52;
 	private int indicatorHeight = 8;
@@ -153,6 +154,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		shouldExpand = a.getBoolean(R.styleable.PagerSlidingTabStrip_shouldExpand, shouldExpand);
 		scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_scrollOffset, scrollOffset);
 		textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_textAllCaps, textAllCaps);
+		textOnly = a.getBoolean(R.styleable.PagerSlidingTabStrip_textOnly, textOnly);
 
 		a.recycle();
 
@@ -197,9 +199,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		for (int i = 0; i < tabCount; i++) {
 
 			if (pager.getAdapter() instanceof IconTabProvider) {
-				addTextTab(i, pager.getAdapter().getPageTitle(i).toString(), ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
-			} else {
-				addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
+        if (textOnly) {
+          addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
+        } else {
+          addTextTab(i, pager.getAdapter().getPageTitle(i).toString(), ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
+        }
+      } else {
+        addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
 			}
 
 		}
@@ -289,11 +295,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 			v.setLayoutParams(defaultTabLayoutParams);
 			v.setBackgroundResource(tabBackgroundResId);
-			if (shouldExpand) {
-				v.setPadding(0, 0, 0, 0);
-			} else {
-				v.setPadding(tabPadding, 0, tabPadding, 0);
-			}
+      v.setPadding(tabPadding, 0, tabPadding, 0);
 
 			if (v instanceof TextView) {
 
