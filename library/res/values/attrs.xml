@@ -14,6 +14,7 @@
         <attr name="shouldExpand" format="boolean" />
         <attr name="textAllCaps" format="boolean" />
         <attr name="textOnly" format="boolean" />
+        <attr name="dividerWidth" format="dimension" />
     </declare-styleable>
 
 </resources>
