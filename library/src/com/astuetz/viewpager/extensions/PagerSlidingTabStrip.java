@@ -52,6 +52,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	// @formatter:off
 	private static final int[] ATTRS = new int[] {
 		android.R.attr.textSize,
+		android.R.attr.textStyle,
 		android.R.attr.textColor
     };
 	// @formatter:on
@@ -135,7 +136,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
 
 		tabTextSize = a.getDimensionPixelSize(0, tabTextSize);
-		tabTextColor = a.getColor(1, tabTextColor);
+    tabTypefaceStyle = a.getInt(1, tabTypefaceStyle);
+    tabTextColor = a.getColor(2, tabTextColor);
 
 		a.recycle();
 
