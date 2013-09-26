@@ -131,7 +131,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, dm);
 		tabTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, tabTextSize, dm);
 
-		// get system attrs (android:textSize and android:textColor)
+		// get system attrs (android:textSize, android:textStyle and android:textColor)
 
 		TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
 
