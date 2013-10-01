@@ -52,6 +52,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	// @formatter:off
 	private static final int[] ATTRS = new int[] {
 		android.R.attr.textSize,
+		android.R.attr.textStyle,
 		android.R.attr.textColor
     };
 	// @formatter:on
@@ -130,12 +131,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, dm);
 		tabTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, tabTextSize, dm);
 
-		// get system attrs (android:textSize and android:textColor)
+		// get system attrs (android:textSize, android:textStyle and android:textColor)
 
 		TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
 
 		tabTextSize = a.getDimensionPixelSize(0, tabTextSize);
-		tabTextColor = a.getColor(1, tabTextColor);
+    tabTypefaceStyle = a.getInt(1, tabTypefaceStyle);
+    tabTextColor = a.getColor(2, tabTextColor);
 
 		a.recycle();
 
@@ -155,6 +157,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_scrollOffset, scrollOffset);
 		textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_textAllCaps, textAllCaps);
 		textOnly = a.getBoolean(R.styleable.PagerSlidingTabStrip_textOnly, textOnly);
+    dividerWidth = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_dividerWidth, dividerWidth);
 
 		a.recycle();
 
@@ -400,13 +403,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		rectPaint.setColor(underlineColor);
 		canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
 
-		// draw divider
+		// draw divider if has non zero width
 
-		dividerPaint.setColor(dividerColor);
-		for (int i = 0; i < tabCount - 1; i++) {
-			View tab = tabsContainer.getChildAt(i);
-			canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
-		}
+    if (dividerWidth > 0){
+      dividerPaint.setColor(dividerColor);
+      for (int i = 0; i < tabCount - 1; i++) {
+        View tab = tabsContainer.getChildAt(i);
+        canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
+      }
+    }
 	}
 
 	private class PageListener implements OnPageChangeListener {
