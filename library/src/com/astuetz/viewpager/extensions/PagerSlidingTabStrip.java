@@ -58,7 +58,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	// @formatter:on
 
 	private LinearLayout.LayoutParams defaultTabLayoutParams;
-	private LinearLayout.LayoutParams expandedTabLayoutParams;
 
 	private final PageListener pageListener = new PageListener();
 	public OnPageChangeListener delegatePageListener;
@@ -170,7 +169,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		dividerPaint.setStrokeWidth(dividerWidth);
 
 		defaultTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-		expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f);
 
 		if (locale == null) {
 			locale = getResources().getConfiguration().locale;
@@ -332,14 +330,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		int myWidth = getMeasuredWidth();
 		int childWidth = 0;
 		for (int i = 0; i < tabCount; i++) {
-			childWidth += tabsContainer.getChildAt(i).getMeasuredWidth();
+      childWidth += tabsContainer.getChildAt(i).getMeasuredWidth();
 		}
 
 		if (!checkedTabWidths && childWidth > 0 && myWidth > 0) {
 
 			if (childWidth <= myWidth) {
 				for (int i = 0; i < tabCount; i++) {
-					tabsContainer.getChildAt(i).setLayoutParams(expandedTabLayoutParams);
+          View child = tabsContainer.getChildAt(i);
+          child.setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, child.getMeasuredWidth()));
 				}
 			}
 
