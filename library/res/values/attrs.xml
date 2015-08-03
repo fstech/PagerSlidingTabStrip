@@ -10,7 +10,7 @@
         <attr name="pstDividerPadding" format="dimension" />
         <attr name="tabPaddingLeftRight" format="dimension" />
         <attr name="scrollOffset" format="dimension" />
-        <attr name="tabBackground" format="reference" />
+        <attr name="pstTabBackground" format="reference" />
         <attr name="shouldExpand" format="boolean" />
         <attr name="pstTextAllCaps" format="boolean" />
         <attr name="textOnly" format="boolean" />
