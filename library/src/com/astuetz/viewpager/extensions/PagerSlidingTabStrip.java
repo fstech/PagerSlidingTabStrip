@@ -25,6 +25,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -46,7 +47,7 @@ import android.widget.TextView;
 public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	public interface IconTabProvider {
-		public int getPageIconResId(int position);
+		public Drawable getPageIconDrawable(int position);
 	}
 
 	// @formatter:off
@@ -203,7 +204,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         if (textOnly) {
           addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
         } else {
-          addTextTab(i, pager.getAdapter().getPageTitle(i).toString(), ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
+          addTextTab(i, pager.getAdapter().getPageTitle(i).toString(), ((IconTabProvider) pager.getAdapter()).getPageIconDrawable(i));
         }
       } else {
         addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
@@ -254,10 +255,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	}
 
-  private void addTextTab(final int position, String title, int resId) {
 
+  private void addTextTab(final int position, String title, Drawable iconDrawable) {
     View tab = LayoutInflater.from(getContext()).inflate(R.layout.tab, tabsContainer, false);
-    ((ImageView) tab.findViewById(android.R.id.icon)).setImageResource(resId);
+    ((ImageView) tab.findViewById(android.R.id.icon)).setImageDrawable(iconDrawable);
     ((TextView) tab.findViewById(android.R.id.title)).setText(title);
 
     tab.setOnClickListener(new OnClickListener() {
